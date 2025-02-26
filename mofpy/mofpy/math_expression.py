@@ -17,6 +17,16 @@ class MathExpression:
             success = True
             if isinstance(value, dict):
                 values[key], success = MathExpression.expressions(value, named_buttons, named_axes)
+            if isinstance(value, list):
+                for i in range(len(value)):
+                    if isinstance(value[i], str):
+                        value[i], success = MathExpression.__expression__(
+                            value[i], named_buttons, named_axes
+                        )
+                    elif isinstance(value[i], dict):
+                        values[key][i], success = MathExpression.expressions(
+                            value[i], named_buttons, named_axes
+                        )
             if isinstance(value, str):
                 values[key], success = MathExpression.__expression__(
                     value, named_buttons, named_axes
