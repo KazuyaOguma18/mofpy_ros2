@@ -28,9 +28,7 @@ class MoveitNamedTarget(Action):
 
     def execute(self, named_joy=None):
         if Shared.get("move_group_disabled"):
-            msg = "move_group disabled; not executing: {0} {1}".format(
-                self.__action, self.__target_name
-            )
+            msg = "move_group disabled; not executing: {0}".format(self.__target_name)
             rclpy.logging.get_logger("mofpy.MoveitNamedTarget").error(msg)
             return
 
@@ -50,7 +48,7 @@ class MoveitNamedTarget(Action):
             )
             return
 
-        self.__planner.set_goal_state(self.__target_name)
+        self.__planner.set_goal_state(configuration_name=self.__target_name)
         plan = self.__planner.plan()
 
         if plan:
